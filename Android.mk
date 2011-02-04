@@ -222,16 +222,21 @@ common_SRC_FILES := \
     src/1.4/dom/domVertices.cpp \
     src/1.4/dom/domVisual_scene.cpp
 
-pcre_intermediates := $(call intermediates-dir-for,STATIC_LIBRARIES,libpcre,HOST,)/pcre
-pcrecpp_intermediates := $(call intermediates-dir-for,STATIC_LIBRARIES,libpcrecpp,HOST,)/pcrecpp
+pcre_intermediatesInc := $(call intermediates-dir-for,STATIC_LIBRARIES,libpcre,HOST,)/pcre/include
+pcrecpp_intermediatesInc := $(call intermediates-dir-for,STATIC_LIBRARIES,libpcrecpp,HOST,)/pcrecpp/include
+common_generated_headers := \
+    $(pcre_intermediatesInc)/pcre.h \
+    $(pcre_intermediatesInc)/config.h \
+    $(pcrecpp_intermediatesInc)/pcre_stringpiece.h \
+    $(pcrecpp_intermediatesInc)/pcrecpparg.h
 
 common_C_INCLUDES += \
     $(LOCAL_PATH)/include \
     $(LOCAL_PATH)/include/1.4 \
     external/tinyxml \
     external/pcre \
-    $(pcre_intermediates)/include \
-    $(pcrecpp_intermediates)/include
+    $(pcre_intermediatesInc) \
+    $(pcrecpp_intermediatesInc)
 
 # For the host
 # ========================================================
@@ -240,6 +245,7 @@ LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE_TAGS := optional
 LOCAL_CFLAGS += -DNO_BOOST -DDOM_INCLUDE_TINYXML -DNO_ZAE
 LOCAL_CFLAGS += -fPIC
+LOCAL_GENERATED_SOURCES := $(common_generated_headers)
 
 LOCAL_SRC_FILES := $(common_SRC_FILES)
 LOCAL_C_INCLUDES += $(common_C_INCLUDES)
