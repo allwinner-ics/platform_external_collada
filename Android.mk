@@ -241,7 +241,7 @@ common_C_INCLUDES += \
 # For the host
 # ========================================================
 include $(CLEAR_VARS)
-LOCAL_PRELINK_MODULE := false
+
 LOCAL_MODULE_TAGS := optional
 LOCAL_CFLAGS += -DNO_BOOST -DDOM_INCLUDE_TINYXML -DNO_ZAE
 LOCAL_CFLAGS += -fPIC
